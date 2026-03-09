@@ -1,6 +1,117 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<title>Government Scheme Finder</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#e8f0fe;
+text-align:center;
+padding:40px;
+}
+
+.container{
+background:white;
+padding:30px;
+border-radius:10px;
+width:400px;
+margin:auto;
+box-shadow:0px 0px 15px gray;
+}
+
+h1{
+color:#2c3e50;
+}
+
+input{
+width:85%;
+padding:10px;
+margin:10px;
+border-radius:5px;
+border:1px solid gray;
+}
+
+button{
+padding:10px 20px;
+background:#28a745;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#218838;
+}
+
+#result{
+margin-top:20px;
+font-weight:bold;
+color:#333;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Government Scheme Finder</h1>
+
+<p>Enter Your Age</p>
+<input type="number" id="age">
+
+<p>Enter Your Annual Income</p>
+<input type="number" id="income">
+
+<br>
+
+<button onclick="findScheme()">Find Scheme</button>
+
+<p id="result"></p>
+
+</div>
+
+<script>
+
+function findScheme(){
+
+let age=document.getElementById("age").value
+let income=document.getElementById("income").value
+
+let result=""
+
+if(income<200000){
+result="You may be eligible for Pradhan Mantri Awas Yojana"
+}
+
+else if(age>60){
+result="You may be eligible for Senior Citizen Pension Scheme"
+}
+
+else if(income<500000){
+result="You may be eligible for Ayushman Bharat Health Scheme"
+}
+
+else{
+result="Please check state government schemes"
+}
+
+document.getElementById("result").innerText=result
+
+}
+
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html>
+<head>
 <title>Government Scheme Finder</title>
 
 <style>
@@ -90,4 +201,5 @@ document.getElementById("result").innerText=result
 </script>
 
 </body>
+
 </html>
