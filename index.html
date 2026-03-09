@@ -72,6 +72,14 @@ color:#333;
 <br>
 
 <button onclick="findScheme()">Find Scheme</button>
+<h3>Popular Government Schemes</h3>
+
+<ul>
+<li>Pradhan Mantri Awas Yojana</li>
+<li>Ayushman Bharat Health Scheme</li>
+<li>PM Kisan Samman Nidhi</li>
+<li>Senior Citizen Pension Scheme</li>
+</ul>
 
 <p id="result"></p>
 
@@ -107,99 +115,28 @@ document.getElementById("result").innerText=result
 }
 
 </script>
-
-</body>
-</html><!DOCTYPE html>
-<html>
-<head>
-<title>Government Scheme Finder</title>
-
-<style>
-body{
-font-family: Arial;
-background:#f2f2f2;
-text-align:center;
-padding:40px;
-}
-
-.container{
-background:white;
-padding:30px;
-border-radius:10px;
-width:400px;
-margin:auto;
-box-shadow:0px 0px 10px gray;
-}
-
-input{
-width:80%;
-padding:10px;
-margin:10px;
-}
-
-button{
-padding:10px 20px;
-background:green;
-color:white;
-border:none;
-cursor:pointer;
-}
-
-#result{
-margin-top:20px;
-font-weight:bold;
-}
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-<h2>Government Scheme Finder</h2>
-
-<p>Enter Age</p>
-<input type="number" id="age">
-
-<p>Enter Monthly Income</p>
-<input type="number" id="income">
-
-<br>
-
-<button onclick="findScheme()">Find Scheme</button>
-
-<p id="result"></p>
-
-</div>
+<button onclick="chatBot()">Ask AI</button>
 
 <script>
 
-function findScheme(){
+function chatBot(){
 
-let age=document.getElementById("age").value
-let income=document.getElementById("income").value
+let question = prompt("Ask about government schemes")
 
-let result=""
-
-if(income<200000){
-result="You may be eligible for PM Awas Yojana"
+if(question.includes("house")){
+alert("You may check Pradhan Mantri Awas Yojana")
 }
 
-else if(age>60){
-result="You may be eligible for Senior Citizen Pension Scheme"
+else if(question.includes("health")){
+alert("Check Ayushman Bharat Health Scheme")
 }
 
 else{
-result="Check Ayushman Bharat Health Scheme"
+alert("Please visit official government portal for more schemes")
 }
-
-document.getElementById("result").innerText=result
 
 }
 
 </script>
-
 </body>
-
 </html>
