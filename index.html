@@ -4,6 +4,8 @@
 
 <title>Government Scheme Finder</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 
 body{
@@ -11,22 +13,33 @@ font-family:Arial;
 background:#e8f0fe;
 text-align:center;
 padding:40px;
+transition:0.3s;
 }
 
 .container{
 background:white;
 padding:30px;
 border-radius:10px;
-width:400px;
+max-width:500px;
 margin:auto;
 box-shadow:0px 0px 15px gray;
+}
+
+#loginBox{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0px 0px 10px gray;
+max-width:400px;
+margin:auto;
+margin-bottom:20px;
 }
 
 h1{
 color:#2c3e50;
 }
 
-input{
+input,select,textarea{
 width:85%;
 padding:10px;
 margin:10px;
@@ -41,6 +54,7 @@ color:white;
 border:none;
 border-radius:5px;
 cursor:pointer;
+margin:5px;
 }
 
 button:hover{
@@ -49,8 +63,37 @@ background:#218838;
 
 #result{
 margin-top:20px;
+}
+
+.footer{
+margin-top:30px;
+font-size:14px;
+color:gray;
+}
+
+#chatbox{
+border:1px solid gray;
+height:200px;
+overflow:auto;
+padding:10px;
+background:#f9f9f9;
+text-align:left;
+}
+
+/* STEP 10 CARD DESIGN */
+
+.scheme-card{
+background:#f8f9fa;
+padding:15px;
+margin:10px;
+border-radius:8px;
+box-shadow:0 0 8px rgba(0,0,0,0.1);
+}
+
+.scheme-card a{
+text-decoration:none;
+color:#007bff;
 font-weight:bold;
-color:#333;
 }
 
 </style>
@@ -59,9 +102,29 @@ color:#333;
 
 <body>
 
-<div class="container">
+<div id="loginBox">
+
+<h2>User Login</h2>
+
+<input type="text" id="username" placeholder="Enter username">
+
+<input type="password" id="password" placeholder="Enter password">
+
+<br>
+
+<button onclick="register()">Register</button>
+
+<button onclick="login()">Login</button>
+
+<p id="loginMessage"></p>
+
+</div>
+
+<div class="container" id="mainSite">
 
 <h1>Government Scheme Finder</h1>
+
+<button onclick="logout()">Logout</button>
 
 <p>Enter Your Age</p>
 <input type="number" id="age">
@@ -69,23 +132,136 @@ color:#333;
 <p>Enter Your Annual Income</p>
 <input type="number" id="income">
 
+<p>Select Your State</p>
+
+<select id="state">
+<option>MP</option>
+<option>UP</option>
+<option>Rajasthan</option>
+<option>Maharashtra</option>
+</select>
+
 <br>
 
 <button onclick="findScheme()">Find Scheme</button>
+
+<br><br>
+
+<input type="text" id="search" placeholder="Search scheme name">
+
+<button onclick="searchScheme()">Search</button>
+
+<button onclick="darkMode()">Dark Mode</button>
+
 <h3>Popular Government Schemes</h3>
 
 <ul>
-<li>Pradhan Mantri Awas Yojana</li>
-<li>Ayushman Bharat Health Scheme</li>
-<li>PM Kisan Samman Nidhi</li>
-<li>Senior Citizen Pension Scheme</li>
+
+<li>
+Pradhan Mantri Awas Yojana  
+<br>
+<a href="https://pmaymis.gov.in" target="_blank">Apply Here</a>
+</li>
+
+<li>
+Ayushman Bharat  
+<br>
+<a href="https://pmjay.gov.in" target="_blank">Apply Here</a>
+</li>
+
+<li>
+PM Kisan Samman Nidhi  
+<br>
+<a href="https://pmkisan.gov.in" target="_blank">Apply Here</a>
+</li>
+
 </ul>
 
 <p id="result"></p>
 
+<h3>AI Scheme Assistant</h3>
+
+<div id="chatbox"></div>
+
+<input type="text" id="userInput" placeholder="Ask about schemes">
+
+<br>
+
+<button onclick="sendMessage()">Send</button>
+
+<h3>Contact Us</h3>
+
+<input type="text" placeholder="Your Name">
+
+<input type="email" placeholder="Your Email">
+
+<textarea placeholder="Your Question"></textarea>
+
+<br>
+
+<button>Send</button>
+
+<div class="footer">
+<p>Government Scheme Finder Project</p>
+<p>Made by Student Developer</p>
+</div>
+
 </div>
 
 <script>
+
+document.getElementById("mainSite").style.display="none"
+
+let schemes=[
+
+{name:"Pradhan Mantri Awas Yojana",type:"house",income:200000,link:"https://pmaymis.gov.in"},
+
+{name:"Ayushman Bharat",type:"health",income:500000,link:"https://pmjay.gov.in"},
+
+{name:"PM Kisan Samman Nidhi",type:"farmer",income:600000,link:"https://pmkisan.gov.in"},
+
+{name:"Senior Citizen Pension Scheme",type:"senior",income:300000,link:"#"}, 
+
+{name:"Pradhan Mantri Ujjwala Yojana",type:"gas",income:200000,link:"https://pmuy.gov.in"}
+
+]
+
+function register(){
+
+let user=document.getElementById("username").value
+let pass=document.getElementById("password").value
+
+localStorage.setItem("user",user)
+localStorage.setItem("pass",pass)
+
+document.getElementById("loginMessage").innerText="Registration Successful"
+
+}
+
+function login(){
+
+let user=document.getElementById("username").value
+let pass=document.getElementById("password").value
+
+let savedUser=localStorage.getItem("user")
+let savedPass=localStorage.getItem("pass")
+
+if(user===savedUser && pass===savedPass){
+
+document.getElementById("loginMessage").innerText="Login Successful"
+
+document.getElementById("loginBox").style.display="none"
+document.getElementById("mainSite").style.display="block"
+
+}
+
+else{
+
+document.getElementById("loginMessage").innerText="Wrong Username or Password"
+
+}
+
+}
 
 function findScheme(){
 
@@ -94,49 +270,107 @@ let income=document.getElementById("income").value
 
 let result=""
 
-if(income<200000){
-result="You may be eligible for Pradhan Mantri Awas Yojana"
+for(let i=0;i<schemes.length;i++){
+
+if(income <= schemes[i].income){
+
+result+=`
+
+<div class="scheme-card">
+<h4>${schemes[i].name}</h4>
+<a href="${schemes[i].link}" target="_blank">Apply Here</a>
+</div>
+
+`
+
 }
 
-else if(age>60){
-result="You may be eligible for Senior Citizen Pension Scheme"
 }
 
-else if(income<500000){
-result="You may be eligible for Ayushman Bharat Health Scheme"
+if(age>60){
+
+result+=`
+
+<div class="scheme-card">
+<h4>Senior Citizen Pension Scheme</h4>
+<a href="#">Apply Here</a>
+</div>
+
+`
+
+}
+
+document.getElementById("result").innerHTML=result
+
+}
+
+function searchScheme(){
+
+let text=document.getElementById("search").value.toLowerCase()
+
+if(text.includes("awas")){
+alert("PM Awas Yojana provides affordable housing.")
+}
+
+else if(text.includes("health")){
+alert("Ayushman Bharat provides health insurance.")
+}
+
+else if(text.includes("kisan")){
+alert("PM Kisan provides financial support to farmers.")
 }
 
 else{
-result="Please check state government schemes"
+alert("Scheme not found")
 }
 
-document.getElementById("result").innerText=result
+}
+
+function sendMessage(){
+
+let input=document.getElementById("userInput").value.toLowerCase()
+let chatbox=document.getElementById("chatbox")
+
+chatbox.innerHTML+="<p><b>You:</b> "+input+"</p>"
+
+let reply=""
+
+for(let i=0;i<schemes.length;i++){
+
+if(input.includes(schemes[i].type)){
+
+reply="You should check "+schemes[i].name
+
+}
+
+}
+
+if(reply===""){
+
+reply="Please check official government portals for more schemes."
+
+}
+
+chatbox.innerHTML+="<p><b>AI:</b> "+reply+"</p>"
+
+document.getElementById("userInput").value=""
+
+}
+
+function darkMode(){
+
+document.body.style.background="black"
+document.body.style.color="white"
+
+}
+
+function logout(){
+
+location.reload()
 
 }
 
 </script>
-<button onclick="chatBot()">Ask AI</button>
 
-<script>
-
-function chatBot(){
-
-let question = prompt("Ask about government schemes")
-
-if(question.includes("house")){
-alert("You may check Pradhan Mantri Awas Yojana")
-}
-
-else if(question.includes("health")){
-alert("Check Ayushman Bharat Health Scheme")
-}
-
-else{
-alert("Please visit official government portal for more schemes")
-}
-
-}
-
-</script>
 </body>
 </html>
